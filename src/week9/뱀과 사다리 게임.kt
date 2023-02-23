@@ -12,7 +12,7 @@ data class Node16928(val idx: Int, val visitCount: Int)
 
 fun main() {
     val board = Array<BoardType16928>(101) { Space16928 }
-    val visitOrder = IntArray(101) {  Int.MAX_VALUE }
+    val visited = BooleanArray(101)
     val (ladderCount, snakeCount) = readln().split(" ").map(String::toInt)
 
     repeat(ladderCount) {
@@ -27,7 +27,7 @@ fun main() {
     }
 
     val queue = LinkedList<Node16928>()
-    visitOrder[1] = 0
+    visited[1] = true
     queue.offer(Node16928(1, 0))
 
     while (queue.isNotEmpty()) {
@@ -45,8 +45,8 @@ fun main() {
                 return
             }
 
-            if (visitOrder[nextIdx] <= visitCount + 1) continue
-            visitOrder[nextIdx] = visitCount + 1
+            if (visited[nextIdx]) continue
+            visited[nextIdx] = true
             queue.offer(Node16928(nextIdx, visitCount + 1))
         }
     }
